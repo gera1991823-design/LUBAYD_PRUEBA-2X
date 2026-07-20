@@ -1,0 +1,6 @@
+IMPORTANTE
+==========
+El archivo firestore.rules incluido en el ZIP no se publica automáticamente por subirlo a GitHub.
+Debes copiar su contenido en Firebase > Firestore Database > Reglas y presionar Publicar.
+
+Para que la cuenta principal vea todos los usuarios en el chat, cambia su campo role a admin en la colección usuarios.

@@ -1,0 +1,48 @@
+{
+  "name": "Gestión Forestal y Chat Lubayd SA",
+  "short_name": "Lubayd Forestal",
+  "description": "Registro, sincronización, análisis y chat interno para operaciones forestales",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f7fb",
+  "theme_color": "#0b7a45",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "./assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Nuevo parte",
+      "short_name": "Nuevo",
+      "description": "Crear un nuevo parte diario",
+      "url": "./?view=nuevo",
+      "icons": [{"src":"./assets/icon-192.png","sizes":"192x192"}]
+    },
+    {
+      "name": "Mensajes",
+      "short_name": "Chat",
+      "description": "Abrir el chat interno",
+      "url": "./?view=chat",
+      "icons": [{"src":"./assets/icon-192.png","sizes":"192x192"}]
+    },
+    {
+      "name": "Historial",
+      "short_name": "Historial",
+      "description": "Consultar partes guardados",
+      "url": "./?view=historial",
+      "icons": [{"src":"./assets/icon-192.png","sizes":"192x192"}]
+    }
+  ]
+}

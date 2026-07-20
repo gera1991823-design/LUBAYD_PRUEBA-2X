@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b7a45">
+  <meta name="description" content="Gestión de partes diarios, producción y ubicaciones forestales de Lubayd SA">
+  <title>Lubayd SA | Gestión Forestal y Chat</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./assets/icon-192.png">
+  <link rel="apple-touch-icon" href="./assets/icon-192.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Gestión Forestal">
+  <link rel="stylesheet" href="./style.css">
+
+  <script>
+    window.LubaydLogoFallback = function (img) {
+      if (img.dataset.fallbackTried !== '1') {
+        img.dataset.fallbackTried = '1';
+        img.src = './assets/logo.png?v=13.1.0';
+        return;
+      }
+      img.onerror = null;
+      img.src = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='20' fill='%23ffffff'/%3E%3Cpath d='M23 68 42 24h15L43 57h30l-6 11H23Z' fill='%2318a957'/%3E%3Cpath d='M45 52 59 24h14L58 52H45Z' fill='%23f2d500'/%3E%3C/svg%3E";
+      img.alt = 'Lubayd SA';
+    };
+  </script>
+</head>
+<body class="auth-pending">
+  <svg class="svg-sprite" aria-hidden="true">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 2h9l3 3v17H6z"/><path d="M15 2v4h4M9 11h6M9 15h6"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20V7"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18h10a4 4 0 0 0 .4-8A6 6 0 0 0 6 8.4 4.8 4.8 0 0 0 7 18Z"/><path d="m9 13 2 2 4-4"/></symbol>
+    <symbol id="i-tree" viewBox="0 0 24 24"><path d="m12 2-5 7h3l-5 7h5v6h4v-6h5l-5-7h3Z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></symbol>
+    <symbol id="i-fuel" viewBox="0 0 24 24"><path d="M4 22V3h10v19M3 22h13M7 7h4M16 7h2l3 3v8a2 2 0 0 1-4 0v-5h-3"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M14 7l5 5-5 5"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 5h16M7 12h10M10 19h4"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 22a8 8 0 0 1 16 0"/></symbol>
+    <symbol id="i-machine" viewBox="0 0 24 24"><path d="M3 18h14l4-5-3-4h-5l-2-4H6v9H3z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M20 4C12 4 5 7 5 14a6 6 0 0 0 6 6c7 0 9-8 9-16Z"/><path d="M4 21c3-6 7-9 12-12"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M18.5 9A7 7 0 0 0 6 6M5.5 15A7 7 0 0 0 18 18"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z"/><path d="M9 3v15M15 6v15"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 3h7v7M10 14 21 3"/><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M7 7l1 14h8l1-14M10 11v6M14 11v6"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.5"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8Z"/><path d="m19 16 .8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8Z"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4Z"/><path d="M8 9h8M8 12h5"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="m3 3 18 9-18 9 4-9Z"/><path d="M7 12h14"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M10 7l-5 5 5 5"/></symbol>
+    <symbol id="i-check-double" viewBox="0 0 24 24"><path d="m2 12 4 4L14 8"/><path d="m9 12 4 4 9-9"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+  </svg>
+
+
+  <div class="auth-gate" id="authGate">
+    <section class="auth-visual" aria-hidden="true">
+      <div class="auth-brand"><img src="./assets/logo-transparent.png?v=13.1.0" data-lubayd-logo onerror="LubaydLogoFallback(this)" alt=""><div><strong>Lubayd SA</strong><span>Gestión Forestal</span></div></div>
+      <div class="auth-copy"><span>PLATAFORMA OPERATIVA SEGURA</span><h1>Gestión forestal conectada, clara y en tiempo real.</h1><p>Registra partes, consulta ubicaciones y comunícate con el equipo desde una única plataforma.</p></div>
+      <div class="auth-feature-list"><span><svg><use href="#i-shield"></use></svg> Acceso protegido</span><span><svg><use href="#i-cloud"></use></svg> Datos sincronizados</span><span><svg><use href="#i-chat"></use></svg> Chat interno</span></div>
+    </section>
+    <section class="auth-panel">
+      <div class="auth-card">
+        <div class="auth-mobile-brand"><img src="./assets/logo-transparent.png?v=13.1.0" data-lubayd-logo onerror="LubaydLogoFallback(this)" alt="Lubayd SA"><div><strong>Lubayd SA</strong><span>Gestión Forestal</span></div></div>
+        <div class="auth-tabs" role="tablist"><button type="button" class="active" data-auth-tab="login">Ingresar</button><button type="button" data-auth-tab="register">Crear cuenta</button></div>
+        <form id="loginForm" class="auth-form active">
+          <div class="auth-heading"><span>ACCESO AL SISTEMA</span><h2>Bienvenido</h2><p>Ingresa con tu correo y contraseña.</p></div>
+          <label><span>Correo electrónico</span><div class="auth-input"><svg><use href="#i-user"></use></svg><input id="loginEmail" type="email" autocomplete="email" required placeholder="nombre@correo.com"></div></label>
+          <label><span>Contraseña</span><div class="auth-input"><svg><use href="#i-shield"></use></svg><input id="loginPassword" type="password" autocomplete="current-password" minlength="6" required placeholder="••••••••"></div></label>
+          <button type="submit" class="btn btn-primary auth-submit">Ingresar <svg><use href="#i-arrow"></use></svg></button>
+          <button type="button" id="resetPasswordBtn" class="auth-link">Olvidé mi contraseña</button>
+        </form>
+        <form id="registerForm" class="auth-form">
+          <div class="auth-heading"><span>NUEVO USUARIO</span><h2>Crear cuenta</h2><p>La cuenta queda habilitada automáticamente.</p></div>
+          <label><span>Nombre y apellido</span><div class="auth-input"><svg><use href="#i-user"></use></svg><input id="registerName" autocomplete="name" required placeholder="Nombre completo"></div></label>
+          <label><span>Correo electrónico</span><div class="auth-input"><svg><use href="#i-user"></use></svg><input id="registerEmail" type="email" autocomplete="email" required placeholder="nombre@correo.com"></div></label>
+          <label><span>Contraseña</span><div class="auth-input"><svg><use href="#i-shield"></use></svg><input id="registerPassword" type="password" autocomplete="new-password" minlength="6" required placeholder="Mínimo 6 caracteres"></div></label>
+          <label><span>Repetir contraseña</span><div class="auth-input"><svg><use href="#i-shield"></use></svg><input id="registerConfirm" type="password" autocomplete="new-password" minlength="6" required placeholder="Repite la contraseña"></div></label>
+          <button type="submit" class="btn btn-primary auth-submit">Crear usuario <svg><use href="#i-arrow"></use></svg></button>
+        </form>
+        <p id="authMessage" class="auth-message" role="alert"></p>
+      </div>
+    </section>
+  </div>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark"><img src="./assets/logo-transparent.png?v=13.1.0" data-lubayd-logo onerror="LubaydLogoFallback(this)" alt="Lubayd SA"></div>
+        <div class="brand-copy"><strong>Lubayd SA</strong><span>Gestión Forestal</span></div>
+      </div>
+
+      <nav class="side-nav" aria-label="Navegación principal">
+        <button class="nav-item active" data-view="dashboard"><svg><use href="#i-home"></use></svg><span>Inicio</span></button>
+        <button class="nav-item" data-view="nuevo"><svg><use href="#i-plus"></use></svg><span>Nuevo parte</span></button>
+        <button class="nav-item" data-view="historial"><svg><use href="#i-file"></use></svg><span>Historial</span></button>
+        <button class="nav-item" data-view="chat"><svg><use href="#i-chat"></use></svg><span>Mensajes</span><span class="nav-badge chat-unread-badge hidden">0</span></button>
+        <button class="nav-item" data-view="graficos"><svg><use href="#i-chart"></use></svg><span>Gráficos</span></button>
+        <button class="nav-item" data-view="ubicaciones"><svg><use href="#i-pin"></use></svg><span>Ubicaciones</span></button>
+      </nav>
+
+      <div class="sidebar-spacer"></div>
+      <div class="side-status-card">
+        <div class="status-orbit"><span></span></div>
+        <div><strong id="sidebarSyncTitle">Sistema en línea</strong><small id="sidebarSyncText">Conectando con Firebase…</small></div>
+      </div>
+      <button type="button" class="sidebar-profile" id="logoutBtn" title="Cerrar sesión">
+        <div class="avatar" id="sidebarAvatar">OP</div>
+        <div><strong id="sidebarUserName">Operador</strong><small id="sidebarUserEmail">Sesión segura</small></div>
+        <svg><use href="#i-chevron-left"></use></svg>
+      </button>
+      <div class="sidebar-version">V13 Chat Modern · Lubayd SA</div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-button menu-button" id="menuBtn" aria-label="Abrir menú"><svg><use href="#i-menu"></use></svg></button>
+          <div><p id="pageEyebrow">Centro de operaciones</p><h1 id="pageTitle">Panel operativo</h1></div>
+        </div>
+        <div class="topbar-actions">
+          <button id="installBtn" class="install-button hidden"><svg><use href="#i-download"></use></svg> Instalar</button>
+          <div id="networkStatus" class="network-pill"><span class="network-dot"></span><div><b>Conectando…</b><small id="lastSyncLabel">Esperando datos</small></div></div>
+          <button class="icon-button notification-button" data-view-link="chat" aria-label="Abrir mensajes"><svg><use href="#i-chat"></use></svg><span class="topbar-badge chat-unread-badge hidden">0</span></button>
+          <div class="topbar-user"><div class="avatar" id="topbarAvatar">OP</div><div><strong id="topbarUserName">Operador</strong><small id="topbarUserEmail">Lubayd SA</small></div></div>
+        </div>
+      </header>
+
+      <section id="dashboard" class="view active">
+        <div class="welcome-row">
+          <div><span class="section-kicker"><svg><use href="#i-spark"></use></svg> RESUMEN OPERATIVO</span><h2 id="greetingTitle">Buenos días, Operador</h2><p id="currentDateText">Actividad actual de la operación forestal.</p></div>
+          <button class="btn btn-primary btn-lg" id="heroNewBtn"><svg><use href="#i-plus"></use></svg> Nuevo parte</button>
+        </div>
+
+        <div class="kpi-grid">
+          <article class="kpi-card kpi-parts">
+            <div class="kpi-icon"><svg><use href="#i-file"></use></svg></div>
+            <div class="kpi-body"><span>Partes registrados</span><strong id="kpiTotal">0</strong><small id="kpiTotalDelta">0 hoy</small></div>
+          </article>
+          <article class="kpi-card kpi-trees">
+            <div class="kpi-icon"><svg><use href="#i-tree"></use></svg></div>
+            <div class="kpi-body"><span>Árboles procesados</span><strong id="kpiArboles">0</strong><small id="kpiTreesDelta">0 hoy</small></div>
+          </article>
+          <article class="kpi-card kpi-hours">
+            <div class="kpi-icon"><svg><use href="#i-clock"></use></svg></div>
+            <div class="kpi-body"><span>Horas trabajadas</span><strong id="kpiHoras">0,0</strong><small id="kpiHoursDelta">0 h hoy</small></div>
+          </article>
+          <article class="kpi-card kpi-checks">
+            <div class="kpi-icon"><svg><use href="#i-shield"></use></svg></div>
+            <div class="kpi-body"><span>Chequeos completos</span><strong id="kpiChequeos">0%</strong><small id="kpiChecksDelta">Sin registros</small></div>
+          </article>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="panel recent-panel">
+            <div class="panel-header"><div><span class="panel-kicker">ACTIVIDAD</span><h3>Últimos partes</h3><p>Registros recientes sincronizados entre los dispositivos.</p></div><button class="text-button" data-view-link="historial">Ver todos <svg><use href="#i-arrow"></use></svg></button></div>
+            <div id="recentList" class="recent-list empty-state">Todavía no hay partes guardados.</div>
+          </article>
+
+          <article class="panel trend-panel">
+            <div class="panel-header"><div><span class="panel-kicker">PRODUCCIÓN</span><h3>Resumen de la jornada</h3><p>Árboles procesados durante los últimos siete días.</p></div><select id="dashboardTrendMetric" class="compact-select"><option value="arboles">Árboles</option><option value="horas">Horas</option><option value="combustible">Combustible</option></select></div>
+            <div class="trend-chart-wrap"><canvas id="dashboardTrendChart"></canvas><div id="dashboardTrendEmpty" class="chart-placeholder hidden">No hay datos para mostrar.</div></div>
+            <div class="trend-stats">
+              <div><span>Árboles</span><strong id="dashboardTrees7">0</strong></div>
+              <div><span>Horas</span><strong id="dashboardHours7">0 h</strong></div>
+              <div><span>Promedio/parte</span><strong id="dashboardAverage7">0</strong></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="dashboard-lower-grid">
+          <article class="panel quick-panel">
+            <div class="panel-header"><div><span class="panel-kicker">ACCESOS RÁPIDOS</span><h3>¿Qué quieres hacer?</h3></div></div>
+            <div class="quick-actions">
+              <button data-view-link="nuevo"><span class="quick-icon green"><svg><use href="#i-plus"></use></svg></span><div><strong>Crear un parte</strong><small>Registro guiado en cinco pasos</small></div><svg class="quick-arrow"><use href="#i-arrow"></use></svg></button>
+              <button data-view-link="graficos"><span class="quick-icon blue"><svg><use href="#i-chart"></use></svg></span><div><strong>Revisar gráficos</strong><small>Producción y consumo por operador</small></div><svg class="quick-arrow"><use href="#i-arrow"></use></svg></button>
+              <button data-view-link="ubicaciones"><span class="quick-icon amber"><svg><use href="#i-pin"></use></svg></span><div><strong>Ver ubicaciones</strong><small>Partes con coordenadas GPS</small></div><svg class="quick-arrow"><use href="#i-arrow"></use></svg></button>
+            </div>
+          </article>
+
+          <article class="panel system-panel">
+            <div class="panel-header"><div><span class="panel-kicker">ESTADO DEL SISTEMA</span><h3>Todo bajo control</h3></div><div class="system-shield"><svg><use href="#i-shield"></use></svg></div></div>
+            <div class="system-list">
+              <div><span><i class="status-dot ok"></i>Base de datos</span><strong id="cloudSystemStatus">Conectando</strong></div>
+              <div><span><i class="status-dot ok"></i>Modo sin conexión</span><strong>Disponible</strong></div>
+              <div><span><i class="status-dot" id="gpsStatusDot"></i>Ubicación GPS</span><strong id="gpsSystemStatus">Sin comprobar</strong></div>
+              <div><span><i class="status-dot ok"></i>Última actualización</span><strong id="lastUpdate">—</strong></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="nuevo" class="view">
+        <div class="wizard-heading">
+          <div class="wizard-title-row"><button class="icon-button back-button" data-view-link="dashboard" aria-label="Volver"><svg><use href="#i-chevron-left"></use></svg></button><div><span class="section-kicker"><svg><use href="#i-file"></use></svg> NUEVO REGISTRO</span><h2>Nuevo parte diario</h2><p>Completa la información paso a paso. El borrador se guarda automáticamente.</p></div></div>
+          <div class="wizard-heading-actions"><button id="useLastRecordBtn" class="btn btn-soft"><svg><use href="#i-refresh"></use></svg> Usar último parte</button><button id="clearDraftBtn" class="btn btn-ghost">Limpiar</button></div>
+        </div>
+
+        <div class="wizard-shell">
+          <ol class="wizard-stepper" aria-label="Progreso del parte">
+            <li class="wizard-step active" data-step-target="1"><button type="button"><span>1</span><b>Datos generales</b></button></li>
+            <li class="wizard-step" data-step-target="2"><button type="button"><span>2</span><b>Producción</b></button></li>
+            <li class="wizard-step" data-step-target="3"><button type="button"><span>3</span><b>Chequeo</b></button></li>
+            <li class="wizard-step" data-step-target="4"><button type="button"><span>4</span><b>Ubicación</b></button></li>
+            <li class="wizard-step" data-step-target="5"><button type="button"><span>5</span><b>Resumen</b></button></li>
+          </ol>
+          <div class="mobile-progress"><div><span id="mobileStepLabel">Paso 1 de 5</span><strong id="stepText">Datos generales</strong></div><div class="progress-track"><span id="stepProgressBar"></span></div></div>
+
+          <form id="parteForm" novalidate autocomplete="off">
+            <div class="form-page active" data-step="1">
+              <div class="form-section-head"><div><span class="form-section-number">01</span><h3>Datos generales del turno</h3><p>Información principal para identificar la operación.</p></div><span class="required-note">* Campos obligatorios</span></div>
+              <div class="form-grid">
+                <label class="field"><span class="field-label">Monte <em>*</em></span><div class="input-shell"><svg><use href="#i-tree"></use></svg><input id="monte" list="monteOptions" required placeholder="Ej.: Monte Verde"></div></label>
+                <label class="field"><span class="field-label">Fecha <em>*</em></span><div class="input-shell"><svg><use href="#i-calendar"></use></svg><input id="fecha" type="date" required></div></label>
+                <label class="field"><span class="field-label">N.º de máquina <em>*</em></span><div class="input-shell"><svg><use href="#i-machine"></use></svg><input id="maquina" list="maquinaOptions" required placeholder="Ej.: 859M-03"></div></label>
+                <label class="field"><span class="field-label">Operador <em>*</em></span><div class="input-shell"><svg><use href="#i-user"></use></svg><input id="operador" list="operadorOptions" required placeholder="Nombre y apellido"></div></label>
+                <fieldset class="field-group full"><legend>Turno <em>*</em></legend><div class="segmented"><label><input type="radio" name="turno" value="Diurno" required><span><svg><use href="#i-sun"></use></svg>Diurno</span></label><label><input type="radio" name="turno" value="Nocturno"><span><svg><use href="#i-moon"></use></svg>Nocturno</span></label></div></fieldset>
+                <label class="field"><span class="field-label">Especie <em>*</em></span><div class="input-shell"><svg><use href="#i-leaf"></use></svg><select id="especie" required><option value="">Seleccionar especie</option><option>Eucalyptus</option><option>Pino</option><option>Otra</option></select></div></label>
+                <label class="field"><span class="field-label">Largo (m) <em>*</em></span><div class="input-shell"><span class="input-prefix">m</span><input id="largo" type="number" inputmode="decimal" min="0" step="0.01" required placeholder="0,00"></div></label>
+              </div>
+            </div>
+
+            <div class="form-page" data-step="2">
+              <div class="form-section-head"><div><span class="form-section-number">02</span><h3>Producción del turno</h3><p>Ingresa las lecturas; los resultados se calculan automáticamente.</p></div></div>
+              <div class="form-grid">
+                <label class="field"><span class="field-label">Horómetro inicial <em>*</em></span><div class="input-shell"><svg><use href="#i-clock"></use></svg><input id="horometroInicio" type="number" inputmode="decimal" min="0" step="0.1" required placeholder="0,0"></div></label>
+                <label class="field"><span class="field-label">Horómetro final <em>*</em></span><div class="input-shell"><svg><use href="#i-clock"></use></svg><input id="horometroFinal" type="number" inputmode="decimal" min="0" step="0.1" required placeholder="0,0"></div></label>
+                <label class="field"><span class="field-label">Árboles iniciales <em>*</em></span><div class="input-shell"><svg><use href="#i-tree"></use></svg><input id="arbolesIniciales" type="number" inputmode="numeric" min="0" step="1" required placeholder="0"></div></label>
+                <label class="field"><span class="field-label">Árboles finales <em>*</em></span><div class="input-shell"><svg><use href="#i-tree"></use></svg><input id="arbolesFinales" type="number" inputmode="numeric" min="0" step="1" required placeholder="0"></div></label>
+                <label class="field"><span class="field-label">Carros <em>*</em></span><div class="input-shell"><svg><use href="#i-machine"></use></svg><input id="carros" type="number" inputmode="numeric" min="0" step="1" required placeholder="0"></div></label>
+                <fieldset class="field-group full"><legend>Actividad <em>*</em></legend><div class="segmented segmented-three"><label><input type="radio" name="actividad" value="Cosecha" required><span>Cosecha</span></label><label><input type="radio" name="actividad" value="Extracción"><span>Extracción</span></label><label><input type="radio" name="actividad" value="Feller Buncher"><span>Feller Buncher</span></label></div></fieldset>
+              </div>
+
+              <div class="calculation-grid">
+                <article><span class="calc-icon green"><svg><use href="#i-clock"></use></svg></span><div><span>Horas trabajadas</span><strong id="calcHoras">0,0 h</strong></div></article>
+                <article><span class="calc-icon blue"><svg><use href="#i-tree"></use></svg></span><div><span>Árboles procesados</span><strong id="calcArboles">0</strong></div></article>
+                <article><span class="calc-icon amber"><svg><use href="#i-chart"></use></svg></span><div><span>Rendimiento</span><strong id="calcRendimiento">0 árb/h</strong></div></article>
+              </div>
+
+              <div class="subsection-heading"><div><h4>Trabajo realizado</h4><p>Este bloque es opcional y sirve para registrar tareas o asistencia mecánica.</p></div></div>
+              <div class="form-grid">
+                <label class="field"><span class="field-label">Desde</span><div class="input-shell"><svg><use href="#i-clock"></use></svg><input id="desde1" type="time"></div></label>
+                <label class="field"><span class="field-label">Hasta</span><div class="input-shell"><svg><use href="#i-clock"></use></svg><input id="hasta1" type="time"></div></label>
+                <label class="field full"><span class="field-label">Trabajo realizado</span><div class="input-shell"><svg><use href="#i-file"></use></svg><input id="trabajo1" placeholder="Descripción breve de la tarea"></div></label>
+                <label class="field full"><span class="field-label">Mecánico responsable</span><div class="input-shell"><svg><use href="#i-user"></use></svg><input id="mecanico1" placeholder="Nombre del responsable"></div></label>
+              </div>
+            </div>
+
+            <div class="form-page" data-step="3">
+              <div class="form-section-head"><div><span class="form-section-number">03</span><h3>Chequeo de la máquina</h3><p>Toca cada tarjeta para confirmar el control realizado.</p></div><button type="button" id="checkAllBtn" class="btn btn-soft btn-sm"><svg><use href="#i-check"></use></svg> Marcar todos</button></div>
+              <div class="check-grid">
+                <label class="check-card"><input id="agua" type="checkbox"><span class="check-box"><svg><use href="#i-check"></use></svg></span><div><strong>Nivel de agua</strong><small>Refrigeración verificada</small></div><span class="check-state">Pendiente</span></label>
+                <label class="check-card"><input id="aceite" type="checkbox"><span class="check-box"><svg><use href="#i-check"></use></svg></span><div><strong>Nivel de aceite</strong><small>Lubricación verificada</small></div><span class="check-state">Pendiente</span></label>
+                <label class="check-card"><input id="valvulina" type="checkbox"><span class="check-box"><svg><use href="#i-check"></use></svg></span><div><strong>Valvulina</strong><small>Estado y nivel revisados</small></div><span class="check-state">Pendiente</span></label>
+                <label class="check-card"><input id="giro" type="checkbox"><span class="check-box"><svg><use href="#i-check"></use></svg></span><div><strong>Sistema de giro</strong><small>Movimiento comprobado</small></div><span class="check-state">Pendiente</span></label>
+                <label class="check-card"><input id="chequeoGral" type="checkbox"><span class="check-box"><svg><use href="#i-check"></use></svg></span><div><strong>Chequeo general</strong><small>Inspección visual completa</small></div><span class="check-state">Pendiente</span></label>
+                <label class="check-card"><input id="cabezal" type="checkbox"><span class="check-box"><svg><use href="#i-check"></use></svg></span><div><strong>Cabezal</strong><small>Estado operativo revisado</small></div><span class="check-state">Pendiente</span></label>
+                <label class="check-card"><input id="grua" type="checkbox"><span class="check-box"><svg><use href="#i-check"></use></svg></span><div><strong>Grúa</strong><small>Operación confirmada</small></div><span class="check-state">Pendiente</span></label>
+              </div>
+              <div class="form-grid form-grid-spaced">
+                <label class="field"><span class="field-label">Combustible (L)</span><div class="input-shell"><svg><use href="#i-fuel"></use></svg><input id="combustible" type="number" inputmode="decimal" min="0" step="0.1" placeholder="0,0"></div></label>
+                <label class="field"><span class="field-label">Hidráulico (L)</span><div class="input-shell"><span class="input-prefix">L</span><input id="hidraulico" type="number" inputmode="decimal" min="0" step="0.1" placeholder="0,0"></div></label>
+                <label class="field full"><span class="field-label">Observaciones</span><div class="textarea-shell"><textarea id="observaciones" rows="4" placeholder="Fallas, novedades o comentarios importantes…"></textarea></div></label>
+                <label class="field"><span class="field-label">Controlado por</span><div class="input-shell"><svg><use href="#i-user"></use></svg><input id="controlado" placeholder="Nombre del encargado"></div></label>
+                <label class="field"><span class="field-label">Firma registrada</span><div class="input-shell"><svg><use href="#i-file"></use></svg><input id="firma" placeholder="Nombre o referencia"></div></label>
+              </div>
+            </div>
+
+            <div class="form-page" data-step="4">
+              <div class="form-section-head"><div><span class="form-section-number">04</span><h3>Ubicación del parte</h3><p>La captura GPS es opcional y nunca impide continuar.</p></div><span class="optional-badge">Opcional</span></div>
+              <div class="gps-layout">
+                <div class="map-preview" id="mapPreview"><div class="map-grid"></div><div class="map-road road-one"></div><div class="map-road road-two"></div><div class="map-water"></div><div class="gps-map-pin" id="gpsMapPin"><span></span></div><div class="map-status"><span class="live-dot"></span><b id="mapStatusText">Esperando ubicación</b></div></div>
+                <div class="gps-control-card">
+                  <div class="gps-control-icon"><svg><use href="#i-pin"></use></svg></div>
+                  <div id="gpsState" class="gps-state idle"><strong>Ubicación pendiente</strong><small>Presiona “Obtener ubicación” o continúa sin GPS.</small></div>
+                  <div id="gpsCoordinates" class="gps-coordinates hidden"></div>
+                  <div class="gps-actions"><button type="button" class="btn btn-primary" id="gpsCaptureBtn"><svg><use href="#i-pin"></use></svg> Obtener ubicación</button><a id="gpsPreviewLink" class="btn btn-ghost hidden" target="_blank" rel="noopener"><svg><use href="#i-external"></use></svg> Abrir mapa</a></div>
+                  <div class="info-note"><svg><use href="#i-info"></use></svg><p>Para mayor precisión, activa la ubicación del teléfono y realiza la captura al aire libre.</p></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-page" data-step="5">
+              <div class="form-section-head"><div><span class="form-section-number">05</span><h3>Revisar y guardar</h3><p>Comprueba los datos principales antes de sincronizar el parte.</p></div><span class="ready-badge"><svg><use href="#i-shield"></use></svg> Listo para guardar</span></div>
+              <div id="reviewContent" class="review-content"></div>
+            </div>
+
+            <p id="message" class="form-message" role="alert"></p>
+            <div class="wizard-actions">
+              <div class="autosave-state"><span class="autosave-dot"></span><div><strong id="draftStatusTitle">Guardado automático</strong><small id="draftStatusText">Los cambios se conservan en este dispositivo</small></div></div>
+              <div class="wizard-buttons"><button type="button" id="cancelBtn" class="btn btn-ghost">Salir</button><button type="button" id="prevBtn" class="btn btn-ghost hidden"><svg><use href="#i-chevron-left"></use></svg> Anterior</button><button type="button" id="nextBtn" class="btn btn-primary">Continuar <svg><use href="#i-arrow"></use></svg></button><button type="submit" id="saveBtn" class="btn btn-primary hidden"><svg><use href="#i-check"></use></svg> Guardar parte</button></div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section id="graficos" class="view">
+        <div class="section-heading-row"><div><span class="section-kicker"><svg><use href="#i-chart"></use></svg> ANÁLISIS OPERATIVO</span><h2>Gráficos de producción</h2><p>Compara combustible, horas y árboles por período y operador.</p></div><button class="btn btn-soft" id="chartsRefresh"><svg><use href="#i-refresh"></use></svg> Actualizar</button></div>
+        <div class="filter-panel">
+          <label><span>Operador</span><select id="chartOperator"><option value="">Todos los operadores</option></select></label>
+          <div class="filter-group"><span>Agrupar por</span><div class="period-tabs"><button class="active" data-period="day">Día</button><button data-period="week">Semana</button><button data-period="month">Mes</button></div></div>
+          <label><span>Rango</span><select id="chartRange"><option value="30">Últimos 30 días</option><option value="90">Últimos 90 días</option><option value="365">Últimos 12 meses</option><option value="all">Todo el historial</option></select></label>
+        </div>
+        <div class="analytics-kpis">
+          <article><span class="analytics-icon fuel"><svg><use href="#i-fuel"></use></svg></span><div><span>Combustible</span><strong id="chartFuelTotal">0 L</strong><small id="chartFuelAvg">Promedio: 0 L/parte</small></div></article>
+          <article><span class="analytics-icon hours"><svg><use href="#i-clock"></use></svg></span><div><span>Horas trabajadas</span><strong id="chartHoursTotal">0 h</strong><small id="chartHoursAvg">Promedio: 0 h/parte</small></div></article>
+          <article><span class="analytics-icon trees"><svg><use href="#i-tree"></use></svg></span><div><span>Árboles procesados</span><strong id="chartTreesTotal">0</strong><small id="chartTreesAvg">Promedio: 0/parte</small></div></article>
+          <article><span class="analytics-icon performance"><svg><use href="#i-chart"></use></svg></span><div><span>Rendimiento</span><strong id="chartPerformance">0 árb/h</strong><small>Árboles por hora</small></div></article>
+        </div>
+        <div class="charts-grid">
+          <article class="chart-card"><div class="chart-card-head"><div><span class="chart-label fuel">COMBUSTIBLE</span><h3>Consumo por período</h3></div><strong id="fuelPeak">Máximo: —</strong></div><div class="canvas-wrap"><canvas id="fuelChart"></canvas><div class="chart-placeholder hidden">No hay datos de combustible.</div></div></article>
+          <article class="chart-card"><div class="chart-card-head"><div><span class="chart-label hours">HORAS</span><h3>Horas trabajadas</h3></div><strong id="hoursPeak">Máximo: —</strong></div><div class="canvas-wrap"><canvas id="hoursChart"></canvas><div class="chart-placeholder hidden">No hay datos de horas.</div></div></article>
+          <article class="chart-card"><div class="chart-card-head"><div><span class="chart-label trees">ÁRBOLES</span><h3>Producción por período</h3></div><strong id="treesPeak">Máximo: —</strong></div><div class="canvas-wrap"><canvas id="treesChart"></canvas><div class="chart-placeholder hidden">No hay datos de árboles.</div></div></article>
+          <article class="chart-card"><div class="chart-card-head"><div><span class="chart-label performance">OPERADORES</span><h3>Rendimiento por operador</h3></div><strong>Árboles/hora</strong></div><div id="operatorRanking" class="operator-ranking"><div class="chart-placeholder">No hay datos para comparar.</div></div></article>
+        </div>
+      </section>
+
+
+      <section id="chat" class="view chat-view">
+        <div class="chat-shell" id="chatLayout">
+          <aside class="chat-directory">
+            <div class="chat-directory-top">
+              <div>
+                <span class="chat-eyebrow">COMUNICACIÓN INTERNA</span>
+                <h2>Mensajes</h2>
+              </div>
+              <span id="chatTotalUnread" class="chat-total-badge hidden">0</span>
+            </div>
+
+            <label class="chat-search">
+              <svg><use href="#i-search"></use></svg>
+              <input id="chatSearch" type="search" autocomplete="off" placeholder="Buscar conversación">
+            </label>
+
+            <div class="chat-filter-tabs" role="tablist" aria-label="Filtrar conversaciones">
+              <button type="button" class="active" data-chat-filter="all">Todos</button>
+              <button type="button" data-chat-filter="unread">No leídos <span id="chatUnreadFilterCount">0</span></button>
+            </div>
+
+            <div id="chatDirectoryNotice" class="chat-directory-notice hidden"></div>
+            <div id="chatConversationList" class="chat-conversation-list">
+              <div class="chat-loading"><span></span><span></span><span></span></div>
+            </div>
+
+            <div class="chat-directory-footer">
+              <svg><use href="#i-lock"></use></svg>
+              <span>Conversaciones privadas entre participantes</span>
+            </div>
+          </aside>
+
+          <article class="chat-thread">
+            <div id="chatEmptyState" class="chat-empty-state">
+              <span class="chat-empty-orbit"><svg><use href="#i-chat"></use></svg></span>
+              <h3>Tu comunicación, en un solo lugar</h3>
+              <p>Selecciona una conversación para enviar y recibir mensajes en tiempo real.</p>
+              <span class="chat-empty-security"><svg><use href="#i-shield"></use></svg> Mensajería interna segura</span>
+            </div>
+
+            <div id="chatThreadContent" class="chat-thread-content hidden">
+              <header class="chat-thread-head">
+                <button type="button" id="chatBackBtn" class="chat-back-button" aria-label="Volver a conversaciones"><svg><use href="#i-back"></use></svg></button>
+                <div class="chat-peer-avatar-wrap">
+                  <div class="chat-peer-avatar" id="chatPeerAvatar">US</div>
+                  <i aria-hidden="true"></i>
+                </div>
+                <div class="chat-peer-copy">
+                  <strong id="chatPeerName">Usuario</strong>
+                  <span id="chatPeerEmail">correo</span>
+                </div>
+                <span class="chat-online-label"><i></i> Cuenta activa</span>
+                <span class="chat-secure-label"><svg><use href="#i-lock"></use></svg> Privado</span>
+              </header>
+
+              <div id="chatMessages" class="chat-messages" aria-live="polite">
+                <div class="chat-loading"><span></span><span></span><span></span></div>
+              </div>
+
+              <form id="chatForm" class="chat-composer">
+                <div class="chat-composer-field">
+                  <textarea id="chatMessageInput" rows="1" maxlength="1000" required placeholder="Escribe un mensaje..."></textarea>
+                  <span class="chat-composer-hint">Enter para enviar · Shift + Enter para una nueva línea</span>
+                </div>
+                <div class="chat-composer-actions">
+                  <small><span id="chatCharacterCount">0</span>/1000</small>
+                  <button type="submit" id="chatSendBtn" class="chat-send-button" aria-label="Enviar mensaje"><svg><use href="#i-send"></use></svg></button>
+                </div>
+              </form>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="ubicaciones" class="view">
+        <div class="section-heading-row"><div><span class="section-kicker"><svg><use href="#i-pin"></use></svg> GEOLOCALIZACIÓN</span><h2>Ubicaciones GPS</h2><p>Consulta los partes geolocalizados y ábrelos en el mapa.</p></div><button class="btn btn-soft" id="gpsRefreshBtn"><svg><use href="#i-refresh"></use></svg> Actualizar</button></div>
+        <div class="location-hero"><div class="location-hero-copy"><span>CONTROL DE CAMPO</span><h3>Todos los registros con ubicación, en un solo lugar.</h3><p>La precisión depende del dispositivo, la señal y las condiciones del entorno.</p></div><div class="radar"><span class="radar-ring r1"></span><span class="radar-ring r2"></span><span class="radar-ring r3"></span><span class="radar-pin"><svg><use href="#i-pin"></use></svg></span></div></div>
+        <div class="location-summary-grid"><article><span>Partes con GPS</span><strong id="gpsRecordCount">0</strong><small>Ubicaciones registradas</small></article><article><span>Precisión promedio</span><strong id="gpsAverageAccuracy">—</strong><small>Menor valor = mayor precisión</small></article><article><span>Última captura</span><strong id="gpsLastCapture">—</strong><small>Fecha y hora</small></article></div>
+        <article class="panel"><div class="panel-header"><div><span class="panel-kicker">REGISTROS</span><h3>Partes geolocalizados</h3><p>Selecciona un registro para abrir sus coordenadas.</p></div></div><div id="locationList" class="location-list"><div class="empty-state">Todavía no hay partes con ubicación GPS.</div></div></article>
+      </section>
+
+      <section id="historial" class="view">
+        <div class="section-heading-row"><div><span class="section-kicker"><svg><use href="#i-file"></use></svg> REGISTROS</span><h2>Historial de partes</h2><p>Busca, filtra y consulta los registros sincronizados.</p></div><div class="heading-actions"><button class="btn btn-soft" id="exportBtn"><svg><use href="#i-download"></use></svg> Exportar JSON</button><button class="btn btn-primary" data-view-link="nuevo"><svg><use href="#i-plus"></use></svg> Nuevo parte</button></div></div>
+        <article class="panel history-panel">
+          <div class="history-toolbar"><label class="search-control"><svg><use href="#i-search"></use></svg><input id="historySearch" placeholder="Buscar por monte, máquina u operador"></label><label class="select-control"><svg><use href="#i-calendar"></use></svg><input id="historyDateFilter" type="date" aria-label="Filtrar por día"></label><label class="select-control"><svg><use href="#i-filter"></use></svg><select id="activityFilter"><option value="">Todas las actividades</option><option>Cosecha</option><option>Extracción</option><option>Feller Buncher</option></select></label><label class="select-control"><svg><use href="#i-user"></use></svg><select id="historyOperatorFilter"><option value="">Todos los operadores</option></select></label><button type="button" id="clearHistoryFilters" class="clear-filter-button"><svg><use href="#i-close"></use></svg> Limpiar</button></div><div class="history-filter-summary"><span id="historyDateLabel">Todos los días</span><strong id="historyResultCount">0 registros</strong></div>
+          <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Monte</th><th>Máquina</th><th>Operador</th><th>Actividad</th><th>Árboles</th><th>Acciones</th></tr></thead><tbody id="historyBody"></tbody></table></div>
+          <div id="historyCards" class="history-cards"></div>
+          <div id="historyEmpty" class="empty-table">No hay registros para mostrar.</div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <nav class="mobile-nav" aria-label="Navegación móvil">
+    <button class="active" data-view="dashboard"><svg><use href="#i-home"></use></svg><span>Inicio</span></button>
+    <button data-view="nuevo"><svg><use href="#i-plus"></use></svg><span>Nuevo</span></button>
+    <button data-view="historial"><svg><use href="#i-file"></use></svg><span>Historial</span></button>
+    <button data-view="chat"><svg><use href="#i-chat"></use></svg><span>Chat</span><span class="mobile-badge chat-unread-badge hidden">0</span></button>
+    <button data-view="graficos"><svg><use href="#i-chart"></use></svg><span>Gráficos</span></button>
+    <button data-view="ubicaciones"><svg><use href="#i-pin"></use></svg><span>GPS</span></button>
+  </nav>
+
+  <datalist id="monteOptions"></datalist>
+  <datalist id="maquinaOptions"></datalist>
+  <datalist id="operadorOptions"></datalist>
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
+  <div id="detailModal" class="modal-overlay hidden"><div class="modal"><button id="detailClose" class="modal-close" aria-label="Cerrar"><svg><use href="#i-close"></use></svg></button><div id="detailContent"></div></div></div>
+  <div id="toast" class="toast hidden"><span class="toast-icon"><svg><use href="#i-check"></use></svg></span><div><strong id="toastTitle">Listo</strong><small id="toastText">Acción completada correctamente.</small></div></div>
+  <div id="updateBanner" class="update-banner hidden"><div><strong>Nueva versión disponible</strong><span>Actualiza para recibir las últimas mejoras.</span></div><button id="updateBtn">Actualizar</button></div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+  <script src="./firebase-init.js"></script>
+  <script src="./app.js"></script>
+  <script src="./charts.js"></script>
+  <script src="./chat.js"></script>
+</body>
+</html>

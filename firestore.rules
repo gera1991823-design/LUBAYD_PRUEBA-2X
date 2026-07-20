@@ -1,0 +1,161 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function userPath(uid) {
+      return /databases/$(database)/documents/usuarios/$(uid);
+    }
+
+    function userExists(uid) {
+      return exists(userPath(uid));
+    }
+
+    function userData(uid) {
+      return get(userPath(uid)).data;
+    }
+
+    function activeUser() {
+      return signedIn()
+        && userExists(request.auth.uid)
+        && userData(request.auth.uid).active == true;
+    }
+
+    function adminUser() {
+      return activeUser() && userData(request.auth.uid).role == 'admin';
+    }
+
+    function validLockedGps() {
+      return request.resource.data.gps is map
+        && request.resource.data.gps.keys().hasAll([
+          'latitude',
+          'longitude',
+          'accuracy',
+          'capturedAt',
+          'capturedAtServer'
+        ])
+        && request.resource.data.gps.latitude is number
+        && request.resource.data.gps.latitude >= -90
+        && request.resource.data.gps.latitude <= 90
+        && request.resource.data.gps.longitude is number
+        && request.resource.data.gps.longitude >= -180
+        && request.resource.data.gps.longitude <= 180
+        && request.resource.data.gps.accuracy is number
+        && request.resource.data.gps.accuracy >= 0
+        && request.resource.data.gps.capturedAt is string
+        && request.resource.data.gps.capturedAtServer == request.time;
+    }
+
+    match /usuarios/{userId} {
+      // Los nuevos usuarios quedan habilitados automáticamente como operadores.
+      allow create: if signedIn()
+        && request.auth.uid == userId
+        && request.resource.data.active == true
+        && request.resource.data.role == 'operador'
+        && request.resource.data.email == request.auth.token.email;
+
+      // Cada persona lee su propio perfil. Los administradores leen todos los usuarios.
+      // Los operadores pueden leer únicamente los perfiles de administradores para abrir el chat.
+      allow read: if signedIn() && (
+        request.auth.uid == userId
+        || (activeUser() && (adminUser() || resource.data.role == 'admin'))
+      );
+
+      // Rol y habilitación se administran desde Firebase Console.
+      allow update, delete: if false;
+    }
+
+    match /partes/{parteId} {
+      allow read: if activeUser();
+
+      allow create: if activeUser()
+        && request.resource.data.createdByUid == request.auth.uid
+        && request.resource.data.createdByEmail == request.auth.token.email
+        && request.resource.data.createdAtServer == request.time
+        && validLockedGps();
+
+      // Los partes y su GPS quedan inmutables.
+      allow update: if false;
+
+      allow delete: if activeUser()
+        && resource.data.createdByUid == request.auth.uid;
+    }
+
+    match /chats/{chatId} {
+      function isParticipant(data) {
+        return activeUser()
+          && data.participants is list
+          && request.auth.uid in data.participants;
+      }
+
+      function validParticipants(data) {
+        return data.participants is list
+          && data.participants.size() == 2
+          && data.adminUid in data.participants
+          && data.operatorUid in data.participants
+          && data.adminUid != data.operatorUid
+          && userExists(data.adminUid)
+          && userExists(data.operatorUid)
+          && userData(data.adminUid).active == true
+          && userData(data.adminUid).role == 'admin'
+          && userData(data.operatorUid).active == true;
+      }
+
+      allow read: if isParticipant(resource.data);
+
+      allow create: if isParticipant(request.resource.data)
+        && validParticipants(request.resource.data)
+        && request.resource.data.unreadByAdmin == 0
+        && request.resource.data.unreadByOperator == 0
+        && request.resource.data.createdAt == request.time;
+
+      // Los participantes solo pueden actualizar metadatos de último mensaje y contadores.
+      allow update: if isParticipant(resource.data)
+        && validParticipants(request.resource.data)
+        && request.resource.data.participants == resource.data.participants
+        && request.resource.data.adminUid == resource.data.adminUid
+        && request.resource.data.operatorUid == resource.data.operatorUid
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'lastMessage',
+          'lastMessageAt',
+          'lastMessageAtClient',
+          'lastSenderId',
+          'unreadByAdmin',
+          'unreadByOperator'
+        ])
+        && request.resource.data.unreadByAdmin is int
+        && request.resource.data.unreadByAdmin >= 0
+        && request.resource.data.unreadByOperator is int
+        && request.resource.data.unreadByOperator >= 0;
+
+      allow delete: if false;
+
+      match /mensajes/{messageId} {
+        function parentChat() {
+          return get(/databases/$(database)/documents/chats/$(chatId)).data;
+        }
+
+        allow read: if activeUser()
+          && request.auth.uid in parentChat().participants;
+
+        allow create: if activeUser()
+          && request.auth.uid in parentChat().participants
+          && request.resource.data.senderId == request.auth.uid
+          && request.resource.data.receiverId in parentChat().participants
+          && request.resource.data.receiverId != request.auth.uid
+          && request.resource.data.text is string
+          && request.resource.data.text.size() > 0
+          && request.resource.data.text.size() <= 1000
+          && request.resource.data.createdAt == request.time
+          && request.resource.data.createdAtClient is string;
+
+        // Los mensajes no se editan ni se eliminan.
+        allow update, delete: if false;
+      }
+    }
+  }
+}

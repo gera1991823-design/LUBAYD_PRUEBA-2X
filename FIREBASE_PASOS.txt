@@ -1,0 +1,25 @@
+PASOS OBLIGATORIOS EN FIREBASE - V12 CHAT
+=========================================
+
+1. AUTHENTICATION
+   Verifica que Correo electrónico/contraseña esté habilitado.
+
+2. FIRESTORE RULES
+   Abre Firestore Database > Reglas.
+   Reemplaza las reglas por el contenido completo de firestore.rules.
+   Presiona Publicar.
+
+3. ADMINISTRADOR PRINCIPAL
+   Abre Firestore Database > Datos > usuarios.
+   Selecciona la cuenta principal y establece:
+   active = true
+   role = admin
+
+4. OPERADORES
+   Los usuarios nuevos se crean automáticamente con:
+   active = true
+   role = operador
+
+5. ACTUALIZACIÓN DEL CELULAR
+   Cierra completamente la PWA y vuelve a abrirla.
+   Presiona Actualizar cuando aparezca el aviso de nueva versión.
